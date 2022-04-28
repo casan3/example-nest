@@ -21,7 +21,7 @@ const API_KEY_PROD = 'PROD1234565';
           username: user,
           password,
           database: dbName,
-          synchronize: true,
+          synchronize: false,
           autoLoadEntities: true,
         };
       },
