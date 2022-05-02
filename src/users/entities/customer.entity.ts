@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -10,7 +11,7 @@ import {
 import { Order } from './order.entity';
 import { User } from './user.entity';
 
-@Entity()
+@Entity({ name: 'customers' })
 export class Customer {
   @PrimaryGeneratedColumn()
   id: number;
@@ -18,7 +19,7 @@ export class Customer {
   @Column({ type: 'varchar', length: 255 })
   name: string;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'varchar', length: 255, name: 'last_name' })
   lastName: string;
 
   @Column({ type: 'varchar', length: 255 })
@@ -27,16 +28,19 @@ export class Customer {
   @CreateDateColumn({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',
+    name: 'created_at',
   })
   createdAt: Date;
 
   @UpdateDateColumn({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',
+    name: 'updated_at',
   })
   updatedAt: Date;
 
   @OneToOne(() => User, (user) => user.customer, { nullable: true })
+  @JoinColumn({ name: 'user_id' })
   user: User;
 
   @OneToMany(() => Order, (order) => order.customer)
