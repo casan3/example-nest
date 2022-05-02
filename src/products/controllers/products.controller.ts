@@ -20,10 +20,10 @@ import { CreateProductDto, UpdateProductDto } from './../dtos/products.dto';
 export class ProductsController {
   constructor(private productsService: ProductsService) {}
 
-  @Get(':productId')
+  @Get(':id')
   @HttpCode(HttpStatus.ACCEPTED)
-  getOne(@Param('productId', ParseIntPipe) productId: number) {
-    return this.productsService.findOne(productId);
+  getOne(@Param('id', ParseIntPipe) id: number) {
+    return this.productsService.findOne(id);
   }
 
   @ApiOperation({ summary: 'List of products' })
@@ -49,8 +49,24 @@ export class ProductsController {
     return this.productsService.update(id, payload);
   }
 
+  @Put(':id/category/:categoryId')
+  addCategory(
+    @Param('id', ParseIntPipe) id: number,
+    @Param('categoryId', ParseIntPipe) categoryId: number,
+  ) {
+    return this.productsService.addCategory(id, categoryId);
+  }
+
   @Delete(':id')
   delete(@Param('id', ParseIntPipe) id: number) {
     return this.productsService.remove(id);
+  }
+
+  @Delete(':id/category/:categoryId')
+  deleteCategory(
+    @Param('id', ParseIntPipe) id: number,
+    @Param('categoryId', ParseIntPipe) categoryId: number,
+  ) {
+    return this.productsService.removeCategory(id, categoryId);
   }
 }
