@@ -17,11 +17,6 @@ export class AppController {
 
   @Get('/route/')
   anotherEndPoint() {
-    return 'con slash';
-  }
-
-  @Get('tasks')
-  tasks() {
-    return this.appService.getTasks();
+    return 'with slash';
   }
 }
