@@ -1,3 +1,4 @@
+import { Expose } from 'class-transformer';
 import {
   CreateDateColumn,
   Entity,
@@ -35,4 +36,17 @@ export class Order {
 
   @OneToMany(() => OrderItem, (item) => item.order)
   items: OrderItem[];
+
+  @Expose()
+  get total() {
+    if (this.items) {
+      return this.items
+        .filter((item) => !!item)
+        .reduce((total, item) => {
+          const totalItem = item.product.price * item.quantity;
+          return total + totalItem;
+        }, 0);
+    }
+    return 0;
+  }
 }
